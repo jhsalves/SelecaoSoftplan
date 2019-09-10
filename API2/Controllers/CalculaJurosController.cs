@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace SelecaoSoftplan.API2.Controllers
 {
@@ -22,51 +24,37 @@ namespace SelecaoSoftplan.API2.Controllers
         [HttpGet]
         public async Task<string> Get(float valorInicial, float meses)
         {
-            var valorTaxa = await ValorTaxa();
+            float valorTaxa;
+            try
+            {
+                valorTaxa = await ValorTaxa();
+            }
+            catch
+            {
+               valorTaxa = 0.01F;
+            }
             var resultado = valorInicial * Math.Pow(1 + valorTaxa, meses);
-            return resultado.ToString();
+            return String.Format("{0:.##}", resultado);
         }
 
         private async Task<float> ValorTaxa()
         {
-            using (var client = new HttpClient())
+            using (var httpClientHandler = new HttpClientHandler())
             {
-                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-                using (var response = await client.GetAsync(ApiTaxaJuros))
+                httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; };
+                using (var client = new HttpClient())
                 {
-                    if (response.IsSuccessStatusCode)
+                    using (var response = await client.GetAsync(ApiTaxaJuros))
                     {
-                        var taxaResult = await response.Content.ReadAsStringAsync();
-                        return float.Parse(Convert.ToString(taxaResult).Replace(",", "."));
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var taxaResult = await response.Content.ReadAsStringAsync();
+                            return (float)Convert.ToDouble(taxaResult);
+                        }
+                        throw new InvalidProgramException("Não foi possível recuperar o valor da taxa junto ao BC.");
                     }
-                    throw new InvalidProgramException("Não foi possível recuperar o valor da taxa.");
                 }
             }
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
