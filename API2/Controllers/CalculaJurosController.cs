@@ -51,7 +51,7 @@ namespace SelecaoSoftplan.API2.Controllers
                             var taxaResult = await response.Content.ReadAsStringAsync();
                             return (float)Convert.ToDouble(taxaResult);
                         }
-                        throw new InvalidProgramException("Não foi possível recuperar o valor da taxa junto ao BC.");
+                        throw new InvalidOperationException("Não foi possível recuperar o valor da taxa junto ao BC.");
                     }
                 }
             }

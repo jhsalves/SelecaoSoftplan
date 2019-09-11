@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API1", "API1\API1.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API2", "API2\API2.csproj", "{3F0100D8-33AE-4BB3-BD0C-296DC2D6A57E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesteUnitario", "TesteUnitario\TesteUnitario.csproj", "{62B91C01-F6DD-4437-BEC0-60E5340D0DFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{3F0100D8-33AE-4BB3-BD0C-296DC2D6A57E}.Release|x64.Build.0 = Release|Any CPU
 		{3F0100D8-33AE-4BB3-BD0C-296DC2D6A57E}.Release|x86.ActiveCfg = Release|Any CPU
 		{3F0100D8-33AE-4BB3-BD0C-296DC2D6A57E}.Release|x86.Build.0 = Release|Any CPU
+		{62B91C01-F6DD-4437-BEC0-60E5340D0DFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62B91C01-F6DD-4437-BEC0-60E5340D0DFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62B91C01-F6DD-4437-BEC0-60E5340D0DFE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{62B91C01-F6DD-4437-BEC0-60E5340D0DFE}.Debug|x64.Build.0 = Debug|Any CPU
+		{62B91C01-F6DD-4437-BEC0-60E5340D0DFE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{62B91C01-F6DD-4437-BEC0-60E5340D0DFE}.Debug|x86.Build.0 = Debug|Any CPU
+		{62B91C01-F6DD-4437-BEC0-60E5340D0DFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62B91C01-F6DD-4437-BEC0-60E5340D0DFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62B91C01-F6DD-4437-BEC0-60E5340D0DFE}.Release|x64.ActiveCfg = Release|Any CPU
+		{62B91C01-F6DD-4437-BEC0-60E5340D0DFE}.Release|x64.Build.0 = Release|Any CPU
+		{62B91C01-F6DD-4437-BEC0-60E5340D0DFE}.Release|x86.ActiveCfg = Release|Any CPU
+		{62B91C01-F6DD-4437-BEC0-60E5340D0DFE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
