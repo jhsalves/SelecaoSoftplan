@@ -49,7 +49,7 @@ namespace SelecaoSoftplan.API2.Controllers
                         if (response.IsSuccessStatusCode)
                         {
                             var taxaResult = await response.Content.ReadAsStringAsync();
-                            return (float)Convert.ToDouble(taxaResult);
+                            return float.Parse(taxaResult.Replace(",","."));
                         }
                         throw new InvalidOperationException("Não foi possível recuperar o valor da taxa junto ao BC.");
                     }

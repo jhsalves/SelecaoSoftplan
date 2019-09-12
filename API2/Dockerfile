@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:sdk AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2.401
  
 WORKDIR /app
  
