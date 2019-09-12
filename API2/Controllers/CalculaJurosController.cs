@@ -18,7 +18,7 @@ namespace SelecaoSoftplan.API2.Controllers
         private readonly string ApiTaxaJuros;
         public CalculaJurosController(IConfiguration configuration)
         {
-            ApiTaxaJuros = configuration["API2"].ToString();
+            ApiTaxaJuros = configuration["API1"].ToString();
         }
         // GET api/values
         [HttpGet]
