@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace SelecaoSoftplan.API2.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ShowMeTheCodeController : ControllerBase
     {

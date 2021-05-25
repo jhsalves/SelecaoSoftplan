@@ -8,53 +8,30 @@ using System.Net.Http;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using API2.Model;
+using API2.Interfaces;
 
 namespace SelecaoSoftplan.API2.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class CalculaJurosController : ControllerBase
     {
-        private readonly string ApiTaxaJuros;
-        public CalculaJurosController(IConfiguration configuration)
+        private readonly IRateService _rateService;
+        private readonly IRateCalculatorService _rateCalculator;
+
+        public CalculaJurosController(IRateService rateService, IRateCalculatorService interestRateCalculator)
         {
-            ApiTaxaJuros = configuration["API1"].ToString();
+            _rateService = rateService;
+            _rateCalculator = interestRateCalculator;
         }
         // GET api/values
         [HttpGet]
-        public async Task<string> Get(float valorInicial, float meses)
+        public async Task<string> Get([FromQuery]InterestRateRequest interestRateRequest)
         {
-            float valorTaxa;
-            try
-            {
-                valorTaxa = await ValorTaxa();
-            }
-            catch
-            {
-               valorTaxa = 0.01F;
-            }
-            var resultado = valorInicial * Math.Pow(1 + valorTaxa, meses);
-            return String.Format("{0:.##}", resultado);
-        }
-
-        private async Task<float> ValorTaxa()
-        {
-            using (var httpClientHandler = new HttpClientHandler())
-            {
-                httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; };
-                using (var client = new HttpClient())
-                {
-                    using (var response = await client.GetAsync(ApiTaxaJuros))
-                    {
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var taxaResult = await response.Content.ReadAsStringAsync();
-                            return float.Parse(taxaResult.Replace(",","."));
-                        }
-                        throw new InvalidOperationException("Não foi possível recuperar o valor da taxa junto ao BC.");
-                    }
-                }
-            }
+            var currentInterestRate = await _rateService.GetCurrentInterestRate();
+            var resultado = _rateCalculator.Calculate(interestRateRequest, currentInterestRate);
+            return $"{resultado:0.##}";
         }
     }
 }
