@@ -20,12 +20,13 @@ namespace SelecaoSoftplan.API2.Controllers
         private readonly IRateService _rateService;
         private readonly IRateCalculatorService _rateCalculator;
 
-        public CalculaJurosController(IRateService rateService, IRateCalculatorService interestRateCalculator)
+        public CalculaJurosController(IRateService rateService, 
+                                      IRateCalculatorService interestRateCalculator)
         {
             _rateService = rateService;
             _rateCalculator = interestRateCalculator;
         }
-        // GET api/values
+
         [HttpGet]
         public async Task<string> Get([FromQuery]InterestRateRequest interestRateRequest)
         {

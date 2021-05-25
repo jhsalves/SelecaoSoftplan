@@ -13,7 +13,7 @@ namespace API2.Extensions
         public static void RegisterServices(this IServiceCollection services)
         {
             services.AddSingleton<IRateService, RateService>();
-            services.AddSingleton<IRateCalculatorService, InterestRateCalculator>();
+            services.AddSingleton<IRateCalculatorService, RateCalculatorService>();
         }
     }
 }
