@@ -1,0 +1,16 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS publish
+COPY ./TesteTaxaJuros ./TesteTaxaJuros
+COPY ./API1 ./API1
+COPY ./API2 ./API2
+RUN dotnet restore "/TesteTaxaJuros/TesteTaxaJuros.csproj"
+RUN dotnet publish "/TesteTaxaJuros/TesteTaxaJuros.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "test", "TesteTaxaJuros.dll"]

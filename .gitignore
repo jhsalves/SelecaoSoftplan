@@ -12,3 +12,6 @@ API2/bin/
 TesteUnitario/obj/
 
 TesteUnitario/bin/
+/TesteTaxaJuros/bin/Debug/netcoreapp3.1
+/TesteTaxaJuros/obj
+.vs

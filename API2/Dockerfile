@@ -2,19 +2,11 @@
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
-WORKDIR /src
-COPY ["API2/API2.csproj", "API2/"]
-RUN dotnet restore "API2/API2.csproj"
-COPY . .
-WORKDIR "/src/API2"
-RUN dotnet build "API2.csproj" -c Release -o /app/build
-
-FROM build AS publish
-RUN dotnet publish "API2.csproj" -c Release -o /app/publish
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS publish
+COPY . ./API2
+RUN dotnet restore "/API2/API2.csproj"
+RUN dotnet publish "/API2/API2.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app

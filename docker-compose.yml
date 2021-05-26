@@ -1,0 +1,38 @@
+version: "3"
+services:
+    api1:
+        build: API1
+        image: api1:latest
+        networks:
+            - overlay
+        ports:
+            - '3000:80'
+            - '3001:443'
+            
+    api2:
+        build: API2
+        image: api2:latest
+        links:
+            - "api1:api1"
+        networks:
+            - overlay
+        depends_on:
+            - api1
+        ports:
+            - "4000:80"
+
+    tests:
+        build:
+            context: .
+            dockerfile: .Dockerfile-tests
+        image: teste:latest
+        networks:
+            - overlay
+        links:
+            - "api1:api1"
+        depends_on:
+            - api2
+            - api1
+
+networks:
+  overlay:
